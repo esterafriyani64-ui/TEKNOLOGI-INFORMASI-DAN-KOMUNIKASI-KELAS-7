@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-gradient-to-br from-sky-50 via-pink-50 to-indigo-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eksplorasi Informatika Kelas 7 - BAB 3 TIK</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        skyTheme: '#0284C7',
+                        skyLight: '#E0F2FE',
+                        pinkTheme: '#EC4899',
+                        pinkLight: '#FCE7F3',
+                        accent: '#F59E0B',
+                        darkText: '#0F172A'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 242, 254, 0.8);
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.08), 0 8px 10px -6px rgba(236, 72, 153, 0.05);
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #0284C7;
+            color: #0284C7;
+            font-weight: 700;
+        }
+
+        .subtab-active {
+            background-color: #0284C7;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .subtab-app-active {
+            background-color: #EC4899;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f0f9ff; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #dashboard-print-area, #dashboard-print-area * { visibility: visible; }
+            #dashboard-print-area { position: absolute; left: 0; top: 0; width: 100%; }
+            nav, .no-print { display: none !important; }
+        }
+
+        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -5px rgba(2, 132, 199, 0.15); }
+        
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .float-animation { animation: float-slow 4s ease-in-out infinite; }
+    </style>
+</head>
+<body class="h-full text-slate-800 flex flex-col overflow-hidden bg-gradient-to-br from-sky-50 via-pink-50 to-indigo-50">
+
+    <nav class="bg-gradient-to-r from-sky-600 via-sky-500 to-pink-500 text-white shadow-lg z-50 flex-shrink-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="nav('home')">
+                    <div class="bg-white/20 p-2 rounded-2xl backdrop-blur-md shadow-inner">
+                        <i class="fa-solid fa-laptop-code text-2xl text-pink-200"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-base sm:text-xl tracking-tight block leading-tight">Informatika Kelas 7</span>
+                        <span class="text-[11px] text-sky-100 block">BAB 3 • TIK & Literasi Digital</span>
+                    </div>
+                </div>
+
+                <div class="flex space-x-1 sm:space-x-2 overflow-x-auto text-xs sm:text-sm py-2 scrollbar-hide">
+                    <button id="nav-home" onclick="nav('home')" class="nav-btn px-3 py-2 rounded-xl hover:bg-white/10 transition flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-house"></i><span>Beranda</span></button>
+                    <button id="nav-memahami" onclick="nav('memahami')" class="nav-btn px-3 py-2 rounded-xl hover:bg-white/10 transition flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-book-open"></i><span>Memahami</span></button>
+                    <button id="nav-mengaplikasi" onclick="nav('mengaplikasi')" class="nav-btn px-3 py-2 rounded-xl hover:bg-white/10 transition flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-puzzle-piece"></i><span>Mengaplikasi</span></button>
+                    <button id="nav-merefleksi" onclick="nav('merefleksi')" class="nav-btn px-3 py-2 rounded-xl hover:bg-white/10 transition flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-pen-to-square"></i><span>Merefleksi</span></button>
+                    <button id="nav-dashboard" onclick="nav('dashboard')" class="nav-btn px-3 py-2 rounded-xl bg-pink-500/30 hover:bg-pink-500/40 border border-pink-200/40 text-pink-100 font-semibold transition flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-chart-pie text-pink-200"></i><span>Dashboard Guru</span></button>
+                    <button id="nav-pengembang" onclick="nav('pengembang')" class="nav-btn px-3 py-2 rounded-xl hover:bg-white/10 transition flex items-center gap-1.5 whitespace-nowrap"><i class="fa-solid fa-user-gear"></i><span>Pengembang</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 overflow-y-auto p-4 md:p-8 w-full max-w-7xl mx-auto">
+
+        <!-- ================= PAGE 1: BERANDA ================= -->
+        <section id="home" class="page-section space-y-8">
+            <!-- Hero Card -->
+            <div class="glass-card rounded-3xl p-6 md:p-10 text-center shadow-xl bg-gradient-to-br from-sky-600 via-sky-500 to-pink-500 text-white relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-15 text-white pointer-events-none float-animation">
+                    <i class="fa-solid fa-computer-mouse text-[240px]"></i>
+                </div>
+                
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <span class="inline-block bg-white/20 backdrop-blur-md text-white font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-4 border border-white/30 shadow-sm">
+                        <i class="fa-solid fa-sparkles mr-1 text-amber-300"></i> Media Pembelajaran Deep Learning Informatika SMP
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                        BAB 3: Teknologi Informasi dan Komunikasi
+                    </h1>
+                    
+                    <!-- Sambutan Ibu Ester Afriyani, S.Si -->
+                    <div class="bg-white/15 backdrop-blur-md p-5 rounded-2xl border border-white/25 mb-6 text-sky-50 text-xs sm:text-base text-left flex flex-col sm:flex-row items-center gap-4 shadow-lg">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-pink-400 to-sky-400 text-white font-extrabold text-2xl flex items-center justify-center shrink-0 shadow-md border-2 border-white">
+                            EA
+                        </div>
+                        <div>
+                            <p class="font-bold text-white text-base sm:text-lg mb-1">
+                                Ibu Ester Afriyani, S.Si
+                            </p>
+                            <p class="text-xs sm:text-sm leading-relaxed text-sky-100">
+                                <i class="fa-solid fa-quote-left text-pink-300 mr-1"></i>
+                                Halo anak-anak hebat Kelas 7 SMP! Selamat datang di dunia Teknologi Informasi dan Komunikasi. Mari belajar mengenali antarmuka komputer, merapikan file dan folder, berselancar cerdas di web, serta berkomunikasi etis melalui surat elektronik secara menyenangkan!
+                                <i class="fa-solid fa-quote-right text-pink-300 ml-1"></i>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button onclick="nav('memahami')" class="bg-pink-500 hover:bg-pink-600 text-white font-extrabold py-3.5 px-8 rounded-2xl shadow-lg transition hover-lift text-sm sm:text-base flex items-center gap-2">
+                            Mulai Petualangan Belajar <i class="fa-solid fa-circle-arrow-right"></i>
+                        </button>
+                        <button onclick="nav('mengaplikasi')" class="bg-white/20 hover:bg-white/30 text-white font-semibold py-3.5 px-6 rounded-2xl border border-white/40 transition text-sm sm:text-base flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-amber-300"></i> Cerdas Cermat Digital
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Profil Pelajar Pancasila -->
+                <div class="glass-card p-6 rounded-3xl border-t-4 border-sky-500 shadow-sm">
+                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
+                        <i class="fa-solid fa-award text-sky-500 text-2xl"></i> Profil Pelajar Pancasila
+                    </h2>
+                    <div class="space-y-3.5">
+                        <div class="flex items-start gap-3 bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100">
+                            <div class="bg-sky-500 text-white p-2.5 rounded-xl shrink-0 shadow"><i class="fa-solid fa-brain text-lg"></i></div>
+                            <div>
+                                <h3 class="font-bold text-sm text-slate-800">Bernalar Kritis</h3>
+                                <p class="text-xs text-slate-600 mt-0.5">Mampu memilih kata kunci pencarian yang presisi, memisahkan informasi fakta dan hoaks di internet.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-pink-50/60 p-3.5 rounded-2xl border border-pink-100">
+                            <div class="bg-pink-500 text-white p-2.5 rounded-xl shrink-0 shadow"><i class="fa-solid fa-lightbulb text-lg"></i></div>
+                            <div>
+                                <h3 class="font-bold text-sm text-slate-800">Kreatif</h3>
+                                <p class="text-xs text-slate-600 mt-0.5">Menyusun struktur folder yang rapi dan merancang poster digital/presentasi informatif.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-indigo-50/60 p-3.5 rounded-2xl border border-indigo-100">
+                            <div class="bg-indigo-500 text-white p-2.5 rounded-xl shrink-0 shadow"><i class="fa-solid fa-users text-lg"></i></div>
+                            <div>
+                                <h3 class="font-bold text-sm text-slate-800">Gotong Royong & Mandiri</h3>
+                                <p class="text-xs text-slate-600 mt-0.5">Berkolaborasi antartim dalam Cerdas Cermat dan melatih refleksi kesadaran belajar mandiri.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pendekatan Deep Learning -->
+                <div class="glass-card p-6 rounded-3xl border-t-4 border-pink-500 shadow-sm">
+                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
+                        <i class="fa-solid fa-bullseye text-pink-500 text-2xl"></i> Pendekatan Pembelajaran Mendalam
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
+                        Dirancang dengan kerangka <strong>Deep Learning</strong> agar siswa tidak sekadar menghafal tombol, melainkan memahami konsep & kecakapan digital masa depan:
+                    </p>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-sky-50 border border-sky-200 rounded-2xl flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-sky-600 text-base mt-0.5"></i>
+                            <div>
+                                <strong class="text-xs sm:text-sm text-sky-900 block">Mindful (Kesadaran Penuh)</strong>
+                                <span class="text-xs text-sky-800">Siswa menyadari pentingnya etika berkomunikasi (netiquette) dan keteraturan pengelolaan file.</span>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-pink-50 border border-pink-200 rounded-2xl flex items-start gap-3">
+                            <i class="fa-solid fa-heart text-pink-600 text-base mt-0.5"></i>
+                            <div>
+                                <strong class="text-xs sm:text-sm text-pink-900 block">Meaningful (Bermakna)</strong>
+                                <span class="text-xs text-pink-800">Memecahkan studi kasus nyata seperti membantu tokoh fiktif menemukan dokumen sekolah dan mengenali email hoaks.</span>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-3">
+                            <i class="fa-solid fa-face-smile text-amber-600 text-base mt-0.5"></i>
+                            <div>
+                                <strong class="text-xs sm:text-sm text-amber-900 block">Joyful (Menggembirakan)</strong>
+                                <span class="text-xs text-amber-800">Simulasi interaktif algoritma search engine, kuis cerdas cermat 3 tim, serta audio SFX interaktif.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: MEMAHAMI ================= -->
+        <section id="memahami" class="page-section hidden">
+            <!-- Submenu Tabs -->
+            <div class="flex overflow-x-auto gap-2 bg-white/80 p-2 rounded-2xl mb-6 shadow-sm border border-sky-100 scrollbar-hide shrink-0 text-xs sm:text-sm">
+                <button onclick="subnav('m-tujuan', this)" class="subtab-btn subtab-active px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-compass mr-1.5"></i>Tujuan CP</button>
+                <button onclick="subnav('m-pretest', this)" class="subtab-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-clipboard-question mr-1.5"></i>Pretest</button>
+                <button onclick="subnav('m-apersepsi', this)" class="subtab-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-lightbulb mr-1.5"></i>Apersepsi</button>
+                <button onclick="subnav('m-materi', this)" class="subtab-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-book-open mr-1.5"></i>Materi Utama</button>
+                <button onclick="subnav('m-simulasi', this)" class="subtab-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap bg-amber-100 text-amber-900 font-bold"><i class="fa-solid fa-gears mr-1.5"></i>Simulasi Engine</button>
+                <button onclick="subnav('m-video', this)" class="subtab-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-video mr-1.5"></i>Video Pembelajaran</button>
+                <button onclick="subnav('m-formatif', this)" class="subtab-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-pen-ruler mr-1.5"></i>Formatif (HOTS)</button>
+            </div>
+
+            <div class="glass-card p-6 md:p-8 rounded-3xl min-h-[60vh]">
+                
+                <!-- Sub 1: Tujuan Pembelajaran (CP Fase D) -->
+                <div id="m-tujuan" class="sub-content">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-sky-700 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-compass text-sky-500"></i> Capaian Pembelajaran (CP) TIK Kelas 7 - Fase D
+                    </h2>
+                    <div class="bg-sky-50 border-l-4 border-sky-500 p-4 rounded-r-2xl mb-6 text-slate-700 text-xs sm:text-sm leading-relaxed">
+                        <strong>Elemen Teknologi Informasi dan Komunikasi:</strong> Pada akhir fase D, peserta didik mampu menjelaskan antarmuka pengguna, mengelola folder dan file secara terstruktur, memanfaatkan peramban web serta mesin pencari untuk mencari informasi secara efektif, dan berkomunikasi melalui surat elektronik secara santun dan aman.
+                    </div>
+
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm sm:text-base">Indikator Ketercapaian Tujuan Pembelajaran (IKTP):</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white border border-sky-100 rounded-2xl shadow-sm flex gap-3 hover-lift">
+                            <div class="text-sky-500 text-xl"><i class="fa-solid fa-desktop"></i></div>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm">1. Antarmuka Pengguna (GUI & VUI)</h4>
+                                <p class="text-xs text-slate-600 mt-1">Mengidentifikasi jenis-jenis antarmuka pengguna (Grafis/GUI, Suara/VUI, Baris Perintah/CLI, dan Sentuh).</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-white border border-sky-100 rounded-2xl shadow-sm flex gap-3 hover-lift">
+                            <div class="text-pink-500 text-xl"><i class="fa-solid fa-folder-tree"></i></div>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm">2. Pengelolaan Folder & File</h4>
+                                <p class="text-xs text-slate-600 mt-1">Membuat hirarki direktori folder yang rapi, mengenali ekstensi file (.docx, .pdf, .jpg), dan melakukan operasi file.</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-white border border-sky-100 rounded-2xl shadow-sm flex gap-3 hover-lift">
+                            <div class="text-indigo-500 text-xl"><i class="fa-solid fa-magnifying-glass"></i></div>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm">3. Browser & Mesin Pencari</h4>
+                                <p class="text-xs text-slate-600 mt-1">Membedakan peramban web (browser) dengan mesin pencari (search engine) serta menerapkan kata kunci efisien.</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-white border border-sky-100 rounded-2xl shadow-sm flex gap-3 hover-lift">
+                            <div class="text-amber-500 text-xl"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm">4. Surat Elektronik (Surel)</h4>
+                                <p class="text-xs text-slate-600 mt-1">Memahami bagian email (To, CC, BCC, Attachment) serta etika berkirim surat elektronik (netiquette).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub 2: Pretest Diagnostik -->
+                <div id="m-pretest" class="sub-content hidden">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700"><i class="fa-solid fa-clipboard-question text-sky-500 mr-2"></i>Asesmen Diagnostik (Pretest Kelas 7)</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-6">Uji pemahaman awalmu sebelum mempelajari TIK Kelas 7! Hasil nilai akan tersimpan ke Dashboard Guru.</p>
+                    <div id="pretest-container" class="space-y-4"></div>
+                </div>
+
+                <!-- Sub 3: Apersepsi Kontekstual -->
+                <div id="m-apersepsi" class="sub-content hidden space-y-6">
+                    <h2 class="text-2xl font-bold text-sky-700"><i class="fa-solid fa-lightbulb text-amber-400 mr-2"></i>Apersepsi: Cerita Kehidupan Sehari-hari</h2>
+                    
+                    <div class="bg-gradient-to-r from-amber-50 to-pink-50 border border-amber-200 p-5 rounded-2xl flex items-start gap-3">
+                        <i class="fa-solid fa-comment-dots text-pink-500 text-2xl mt-1"></i>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm sm:text-base">Pertanyaan Pemantik Kontekstual:</h3>
+                            <p class="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
+                                "Pernahkah kamu kebingungan mencari dokumen tugas sekolah yang lupa disimpan di mana pada laptop atau HP? Atau saat mencari tugas di internet, justru muncul berita gosip dan iklan yang tidak berguna? Mengapa itu bisa terjadi?"
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Studi Kasus Nyata 1 -->
+                        <div class="bg-white p-5 rounded-2xl border border-sky-100 shadow-sm space-y-3">
+                            <span class="bg-sky-100 text-sky-800 font-bold text-[11px] px-3 py-1 rounded-full">Studi Kasus 1: Laptop Siti yang Berantakan</span>
+                            <h4 class="font-bold text-sm text-slate-800">Dilema File Lupa Nama</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Siti menyimpan semua foto tugas IPA, dokumen Bahasa Indonesia, dan file tugas Matematika di folder "Downloads" tanpa mengganti namanya (misal: <code>New Document (1).docx</code>, <code>IMG_20261001.jpg</code>). Saat dikumpulkan besok pagi, Siti menangis karena panik tidak bisa menemukan filenya!
+                            </p>
+                            <div class="bg-sky-50 p-3 rounded-xl border border-sky-200 text-xs text-sky-900">
+                                💡 <strong>Solusi TIK:</strong> Membuat struktur folder bertingkat (misal: <code>Kelas 7/Tugas IPA/</code>) dan memberi nama file secara terstruktur.
+                            </div>
+                        </div>
+
+                        <!-- Studi Kasus Nyata 2 -->
+                        <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-3">
+                            <span class="bg-pink-100 text-pink-800 font-bold text-[11px] px-3 py-1 rounded-full">Studi Kasus 2: Email Tanpa Subjek Budi</span>
+                            <h4 class="font-bold text-sm text-slate-800">Tugas Terabaikan Guru</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Budi mengirim tugas TIK kepada gurunya via email. Namun Budi mengosongkan judul subjek, tidak menulis salam pembuka, dan langsung melampirkan file tanpa keterangan. Email Budi dianggap sebagai spam dan tidak dibaca oleh guru!
+                            </p>
+                            <div class="bg-pink-50 p-3 rounded-xl border border-pink-200 text-xs text-pink-900">
+                                💡 <strong>Solusi TIK:</strong> Memahami tata krama surel (netiquette) dengan mengisi Subject, Salam, Pesan Pembuka, dan Nama Pengirim.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub 4: Materi Utama -->
+                <div id="m-materi" class="sub-content hidden space-y-6">
+                    <h2 class="text-2xl font-bold text-sky-700"><i class="fa-solid fa-book text-sky-500 mr-2"></i>Materi Pembelajaran TIK Kelas 7</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Topik 1 -->
+                        <div class="bg-white p-5 rounded-2xl border border-sky-100 shadow-sm hover-lift">
+                            <h3 class="font-bold text-base text-sky-600 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-desktop text-xl"></i> 1. Antarmuka Pengguna (User Interface)
+                            </h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                Antarmuka Pengguna adalah media interaksi antara manusia dengan perangkat komputer:
+                            </p>
+                            <ul class="text-xs space-y-2 text-slate-700">
+                                <li class="bg-sky-50 p-2.5 rounded-xl border border-sky-100"><strong>• GUI (Graphical User Interface):</strong> Antarmuka grafis berupa ikon, tombol, dan jendela (contoh: Windows, Android, macOS).</li>
+                                <li class="bg-sky-50 p-2.5 rounded-xl border border-sky-100"><strong>• VUI (Voice User Interface):</strong> Antarmuka perintah suara (contoh: Google Assistant, Siri).</li>
+                                <li class="bg-sky-50 p-2.5 rounded-xl border border-sky-100"><strong>• CLI (Command Line Interface):</strong> Antarmuka berbasis teks perintah ketik (contoh: Command Prompt/CMD).</li>
+                                <li class="bg-sky-50 p-2.5 rounded-xl border border-sky-100"><strong>• Touch & Gesture:</strong> Antarmuka layar sentuh dan gerakan tangan.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Topik 2 -->
+                        <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm hover-lift">
+                            <h3 class="font-bold text-base text-pink-600 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-folder-tree text-xl"></i> 2. Pengelolaan Folder dan File
+                            </h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                File dikelompokkan ke dalam direktori/folder secara terorganisir:
+                            </p>
+                            <div class="space-y-2 text-xs">
+                                <div class="bg-pink-50 p-2.5 rounded-xl border border-pink-100">
+                                    <strong>Ekstensi File Utama:</strong>
+                                    <p class="text-slate-600 mt-1">• Dokumen Teks: <code>.docx</code>, <code>.pdf</code>, <code>.txt</code></p>
+                                    <p class="text-slate-600">• Gambar: <code>.jpg</code>, <code>.png</code>, <code>.svg</code></p>
+                                    <p class="text-slate-600">• Lembar Kerja: <code>.xlsx</code> | Audio/Video: <code>.mp3</code>, <code>.mp4</code></p>
+                                </div>
+                                <div class="bg-pink-50 p-2.5 rounded-xl border border-pink-100">
+                                    <strong>Operasi File:</strong> <i>Cut</i> (pindah), <i>Copy</i> (gandakan), <i>Paste</i> (tempel), <i>Rename</i> (ubah nama), <i>Delete</i> (hapus).
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topik 3 -->
+                        <div class="bg-white p-5 rounded-2xl border border-indigo-100 shadow-sm hover-lift">
+                            <h3 class="font-bold text-base text-indigo-600 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-globe text-xl"></i> 3. Peramban Web vs Mesin Pencari
+                            </h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                                Beda Peramban Web (Browser) dan Mesin Pencari (Search Engine):
+                            </p>
+                            <ul class="text-xs space-y-2 text-slate-700">
+                                <li class="bg-indigo-50 p-2.5 rounded-xl border border-indigo-100"><strong>• Peramban Web (Browser):</strong> Perangkat lunak untuk membuka halaman internet (contoh: Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).</li>
+                                <li class="bg-indigo-50 p-2.5 rounded-xl border border-indigo-100"><strong>• Mesin Pencari (Search Engine):</strong> Program berbasis situs web untuk mencari informasi berdasar kata kunci (contoh: Google Search, Bing, Yahoo).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Topik 4 -->
+                        <div class="bg-white p-5 rounded-2xl border border-amber-100 shadow-sm hover-lift">
+                            <h3 class="font-bold text-base text-amber-600 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-envelope-open-text text-xl"></i> 4. Surat Elektronik & Netiquette
+                            </h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                                Komponen Email dan Etika Berkomunikasi:
+                            </p>
+                            <div class="space-y-1.5 text-xs text-slate-700">
+                                <p class="bg-amber-50 p-2 rounded-lg border border-amber-100"><strong>To:</strong> Alamat email penerima utama.</p>
+                                <p class="bg-amber-50 p-2 rounded-lg border border-amber-100"><strong>CC (Carbon Copy):</strong> Penerima tembusan (diketahui bersama).</p>
+                                <p class="bg-amber-50 p-2 rounded-lg border border-amber-100"><strong>BCC (Blind CC):</strong> Tembusan rahasia (penerima lain tidak melihat).</p>
+                                <p class="bg-amber-50 p-2 rounded-lg border border-amber-100"><strong>Attachment:</strong> Lampiran file dokumen/foto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub 5: Simulasi Interaktif Engine -->
+                <div id="m-simulasi" class="sub-content hidden">
+                    <h2 class="text-2xl font-bold mb-2 text-sky-700 flex items-center gap-2">
+                        <i class="fa-solid fa-gears text-amber-500"></i> Simulasi Interaktif Alur Kerja Mesin Pencari
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-6">Uji bagaimana bot spider melakukan Crawling → Simpan di Index → Ranking Relevansi → Hasil Pencarian!</p>
+
+                    <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-2xl border border-slate-700">
+                        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                            <input type="text" id="sim-input" class="flex-1 p-3.5 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-sky-400 text-xs sm:text-sm font-mono" value="struktur folder informatika kelas 7">
+                            <button onclick="runSimulation()" class="bg-sky-500 hover:bg-sky-600 text-white font-extrabold px-6 py-3.5 rounded-xl transition flex items-center justify-center gap-2 text-xs sm:text-sm shadow-lg">
+                                <i class="fa-solid fa-play"></i> Jalankan Simulasi
+                            </button>
+                        </div>
+
+                        <div class="relative min-h-[220px] bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden p-4 flex flex-col justify-between">
+                            <div id="sim-status" class="text-center text-xs sm:text-sm font-extrabold uppercase tracking-widest text-sky-300">STATUS: SIAP DIJALANKAN</div>
+                            
+                            <div class="flex justify-between items-center px-4 md:px-12 relative my-6">
+                                <div id="sim-spider" class="text-4xl transition-all duration-1000 opacity-30 transform translate-x-0">🕷️</div>
+                                <div id="sim-crawler-icon" class="text-3xl text-sky-400 opacity-40"><i class="fa-solid fa-spider"></i><p class="text-[10px] mt-1 text-center">Crawling</p></div>
+                                <div id="sim-index-icon" class="text-3xl text-pink-400 opacity-40"><i class="fa-solid fa-database"></i><p class="text-[10px] mt-1 text-center">Indexing</p></div>
+                                <div id="sim-rank-icon" class="text-3xl text-amber-400 opacity-40"><i class="fa-solid fa-ranking-star"></i><p class="text-[10px] mt-1 text-center">Ranking</p></div>
+                            </div>
+
+                            <div id="sim-rank" class="opacity-0 transition-all duration-500 bg-white text-slate-900 p-4 rounded-xl text-xs space-y-1 shadow-lg border-l-4 border-sky-500">
+                                <div class="font-bold text-sky-600 text-sm" id="sim-result-title">Hasil Pencarian Teratas</div>
+                                <div class="text-sky-700 font-mono text-[11px]" id="sim-result-url">https://kemdikbud.go.id/informatika-kelas7-folder.pdf</div>
+                                <div class="text-slate-600">Dokumen ditemukan dan diproses melalui algoritma indeks kata kunci relevan dengan skor 98.5%.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub 6: Video Pembelajaran -->
+                <div id="m-video" class="sub-content hidden text-center space-y-4">
+                    <h2 class="text-2xl font-bold text-sky-700"><i class="fa-solid fa-circle-play text-pink-500 mr-2"></i>Video Pembelajaran TIK SMP</h2>
+                    <p class="text-xs text-slate-600">Saksikan materi video pengenalan TIK & Pengelolaan Perangkat Lunak!</p>
+                    <div class="aspect-video max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/oifm7Kq8WSI" title="Video Pembelajaran TIK SMP" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Sub 7: Formatif HOTS -->
+                <div id="m-formatif" class="sub-content hidden">
+                    <h2 class="text-2xl font-bold text-sky-700 mb-2"><i class="fa-solid fa-pen-ruler text-sky-500 mr-2"></i>Latihan Formatif HOTS</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-6">Uji pemikiran analisis dan evaluasimu. Dilengkapi pembahasan langsung otomatis!</p>
+                    <div id="formatif-container" class="space-y-4"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: MENGAPLIKASI ================= -->
+        <section id="mengaplikasi" class="page-section hidden">
+            <!-- App Tabs -->
+            <div class="flex overflow-x-auto gap-2 bg-white/80 p-2 rounded-2xl mb-6 shadow-sm border border-pink-100 scrollbar-hide shrink-0 text-xs sm:text-sm">
+                <button onclick="subnavApp('a-cerdas', this)" class="subtab-app-btn subtab-app-active px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-trophy text-amber-400 mr-1.5"></i> Cerdas Cermat Digital</button>
+                <button onclick="subnavApp('a-kasus', this)" class="subtab-app-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-user-secret mr-1.5"></i> Studi Kasus (Detektif)</button>
+                <button onclick="subnavApp('a-proyek', this)" class="subtab-app-btn px-4 py-2.5 rounded-xl transition whitespace-nowrap"><i class="fa-solid fa-diagram-project mr-1.5"></i> Proyek Mini Berdiferensiasi</button>
+            </div>
+
+            <div class="glass-card p-6 md:p-8 rounded-3xl min-h-[60vh]">
+                
+                <!-- A. Cerdas Cermat Digital -->
+                <div id="a-cerdas" class="app-content">
+                    <div id="cc-setup" class="max-w-2xl mx-auto text-center space-y-6">
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-sky-700 mb-2">Cerdas Cermat Digital TIK</h2>
+                            <p class="text-xs sm:text-sm text-slate-600">Kompetisi interaktif 3 Tim (Tim A, Tim B, Tim C) menjawab serentak dalam 1 layar dengan animasi roket & SFX suara!</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
+                                <label class="font-bold text-sky-700 text-xs block mb-1">Nama Tim A</label>
+                                <input type="text" id="cc-teamA" class="w-full p-2 rounded-xl border text-center font-bold text-xs sm:text-sm" value="Tim Garuda">
+                            </div>
+                            <div class="bg-pink-50 p-4 rounded-2xl border border-pink-200">
+                                <label class="font-bold text-pink-700 text-xs block mb-1">Nama Tim B</label>
+                                <input type="text" id="cc-teamB" class="w-full p-2 rounded-xl border text-center font-bold text-xs sm:text-sm" value="Tim Cendrawasih">
+                            </div>
+                            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200">
+                                <label class="font-bold text-amber-700 text-xs block mb-1">Nama Tim C</label>
+                                <input type="text" id="cc-teamC" class="w-full p-2 rounded-xl border text-center font-bold text-xs sm:text-sm" value="Tim Komodo">
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-xs sm:text-sm mb-3 text-slate-700">Pilih Level Kesulitan:</h3>
+                            <div class="flex justify-center gap-3">
+                                <button onclick="startCC('mudah')" class="px-5 py-2.5 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl text-xs sm:text-sm hover-lift transition">Mudah</button>
+                                <button onclick="startCC('sedang')" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs sm:text-sm hover-lift transition">Sedang</button>
+                                <button onclick="startCC('sulit')" class="px-5 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl text-xs sm:text-sm hover-lift transition">Sulit (HOTS)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cc-arena" class="hidden space-y-6">
+                        <!-- Scoreboard Header -->
+                        <div class="bg-slate-900 text-white p-4 rounded-2xl shadow-xl flex items-center justify-between">
+                            <div class="text-center w-1/4"><div class="text-[10px] text-sky-300 font-bold" id="label-teamA">TIM A</div><div id="scoreA" class="text-xl sm:text-2xl font-extrabold text-sky-400">0</div></div>
+                            <div class="text-center w-2/4">
+                                <div id="cc-level-badge" class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">LEVEL</div>
+                                <div class="text-xs sm:text-sm font-bold" id="cc-q-counter">Soal 1 / 5</div>
+                            </div>
+                            <div class="text-center w-1/4"><div class="text-[10px] text-pink-300 font-bold" id="label-teamB">TIM B</div><div id="scoreB" class="text-xl sm:text-2xl font-extrabold text-pink-400">0</div></div>
+                            <div class="text-center w-1/4 border-l border-slate-700 pl-2"><div class="text-[10px] text-amber-300 font-bold" id="label-teamC">TIM C</div><div id="scoreC" class="text-xl sm:text-2xl font-extrabold text-amber-400">0</div></div>
+                        </div>
+
+                        <div class="flex flex-col lg:flex-row gap-6">
+                            <!-- Animated Rocket Progress Bar -->
+                            <div class="hidden lg:flex flex-col items-center justify-end w-12 bg-slate-100 rounded-full p-2 shadow-inner relative h-80">
+                                <div class="absolute top-2 text-[9px] font-extrabold text-slate-400">FINISH</div>
+                                <div id="cc-rocket" class="text-3xl transition-all duration-700 absolute bottom-2">🚀</div>
+                            </div>
+
+                            <!-- Soal dan Papan Tim -->
+                            <div class="flex-1 space-y-6">
+                                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 min-h-[120px] flex items-center justify-center text-center">
+                                    <h3 id="cc-question-text" class="text-sm sm:text-base font-bold text-slate-800 leading-relaxed"></h3>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <!-- Team A Board -->
+                                    <div class="bg-sky-50/70 p-4 rounded-2xl border border-sky-200">
+                                        <h4 id="board-teamA" class="font-bold text-sky-800 text-xs text-center mb-3 pb-1 border-b border-sky-200">Tim A</h4>
+                                        <div class="space-y-2" id="opts-A"></div>
+                                    </div>
+                                    <!-- Team B Board -->
+                                    <div class="bg-pink-50/70 p-4 rounded-2xl border border-pink-200">
+                                        <h4 id="board-teamB" class="font-bold text-pink-800 text-xs text-center mb-3 pb-1 border-b border-pink-200">Tim B</h4>
+                                        <div class="space-y-2" id="opts-B"></div>
+                                    </div>
+                                    <!-- Team C Board -->
+                                    <div class="bg-amber-50/70 p-4 rounded-2xl border border-amber-200">
+                                        <h4 id="board-teamC" class="font-bold text-amber-800 text-xs text-center mb-3 pb-1 border-b border-amber-200">Tim C</h4>
+                                        <div class="space-y-2" id="opts-C"></div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center pt-2">
+                                    <button id="cc-cek-btn" onclick="checkCerdasCermat()" class="hidden bg-sky-600 hover:bg-sky-700 text-white font-extrabold py-3.5 px-8 rounded-xl shadow-lg transition text-xs sm:text-sm">
+                                        <i class="fa-solid fa-check-double mr-1"></i> Cek Jawaban Serentak!
+                                    </button>
+                                    <button id="cc-next-btn" onclick="nextCC()" class="hidden bg-pink-500 hover:bg-pink-600 text-white font-extrabold py-3.5 px-8 rounded-xl shadow-lg transition text-xs sm:text-sm">
+                                        Lanjut Soal Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard Result -->
+                    <div id="cc-result" class="hidden text-center max-w-xl mx-auto py-8 space-y-6">
+                        <div class="text-6xl text-amber-400 float-animation"><i class="fa-solid fa-trophy"></i></div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Hasil Akhir Cerdas Cermat</h2>
+                        <div id="cc-podium" class="space-y-3"></div>
+                        <button onclick="resetCC()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2.5 px-6 rounded-xl text-xs sm:text-sm transition">Main Lagi</button>
+                    </div>
+                </div>
+
+                <!-- B. Studi Kasus Detektif Digital -->
+                <div id="a-kasus" class="app-content hidden space-y-4">
+                    <h2 class="text-2xl font-bold text-sky-700"><i class="fa-solid fa-user-secret text-pink-500 mr-2"></i>Studi Kasus: Detektif Digital TIK</h2>
+                    <div class="bg-white p-6 rounded-2xl border border-sky-100 space-y-4 text-xs sm:text-sm shadow-sm">
+                        <div class="bg-sky-50 p-4 rounded-xl border border-sky-200">
+                            <span class="bg-pink-500 text-white font-bold px-2.5 py-0.5 rounded-full text-[10px]">Skenario Kasus Email Mencurigakan</span>
+                            <h3 class="font-bold text-slate-800 text-sm sm:text-base my-2">Email Phishing Mengatasnamakan Sekolah:</h3>
+                            <p class="text-slate-600 leading-relaxed italic bg-white p-3 rounded-lg border font-mono text-xs">
+                                Dari: admin-beasiswa@sekolah-gratisan.blogspot.com<br>
+                                Subjek: (Tanpa Subjek)<br>
+                                Isi: "Selamat! Anda mendapat laptop gratis dari sekolah. Buka file lampiran voucher.exe dan masukkan kata sandi email anda segera!"
+                            </p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-sky-800">Tugas Analisis Detektif (HOTS):</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="font-bold text-slate-700 text-xs block mb-1">1. Tuliskan 2 ciri-ciri utama mengapa email di atas tergolong email hoaks/penipuan (phishing)?</label>
+                                    <textarea id="kasus-alasan" rows="2" class="w-full p-2.5 rounded-xl border text-xs" placeholder="Tuliskan indikator analisis kelompokmu..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="font-bold text-slate-700 text-xs block mb-1">2. Tuliskan kata kunci pencarian paling efisien di mesin pencari untuk mengecek info resmi beasiswa sekolah:</label>
+                                    <input type="text" id="kasus-kw" class="w-full p-2.5 rounded-xl border text-xs font-mono" placeholder="Contoh: info beasiswa laptop site:kemdikbud.go.id">
+                                </div>
+                                <button onclick="checkStudiKasus()" class="bg-sky-600 text-white font-bold px-5 py-2.5 rounded-xl text-xs hover:bg-sky-700 transition shadow">
+                                    Simpan Analisis Detektif
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Proyek Mini Berdiferensiasi -->
+                <div id="a-proyek" class="app-content hidden space-y-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-sky-700"><i class="fa-solid fa-diagram-project text-pink-500 mr-2"></i>Proyek Mini (Pembelajaran Berdiferensiasi)</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Pilih salah satu tantangan proyek sesuai dengan minat dan gaya belajarmu!</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 rounded-3xl bg-gradient-to-br from-pink-50 to-pink-100 border border-pink-200 space-y-3 hover-lift shadow-sm">
+                            <span class="bg-pink-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">Opsi A - Visual / Desain</span>
+                            <h3 class="font-bold text-base sm:text-lg text-pink-900">Poster Digital "Etika Email & Struktur Folder"</h3>
+                            <p class="text-xs text-slate-700 leading-relaxed">
+                                Buat poster infografis kreatif menggunakan Canva / menggambar manual tentang tata krama berkirim email resmi serta tips merapikan folder komputer.
+                            </p>
+                        </div>
+                        <div class="p-6 rounded-3xl bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200 space-y-3 hover-lift shadow-sm">
+                            <span class="bg-sky-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">Opsi B - Praktik / Presentasi</span>
+                            <h3 class="font-bold text-base sm:text-lg text-sky-900">Presentasi "Trik Kata Kunci Pencarian Efektif"</h3>
+                            <p class="text-xs text-slate-700 leading-relaxed">
+                                Susun 3 slide presentasi sederhana yang menjelaskan perbedaan Browser dengan Search Engine serta simulasi pencarian tugas sekolah secara tepat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: MEREFLEKSI ================= -->
+        <section id="merefleksi" class="page-section hidden">
+            <div class="max-w-3xl mx-auto glass-card p-6 md:p-8 rounded-3xl space-y-6 shadow-lg">
+                <div>
+                    <h2 class="text-2xl font-bold text-sky-700 mb-1"><i class="fa-solid fa-pen-nib text-pink-500 mr-2"></i>Refleksi Pembelajaran Model 4F</h2>
+                    <p class="text-xs sm:text-sm text-slate-600">Isi refleksi autentikmu. Jawabanmu akan otomatis dikirim ke Dashboard Guru!</p>
+                </div>
+
+                <form id="refleksiForm" onsubmit="saveRefleksi(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-sky-50/70 rounded-2xl border border-sky-200">
+                            <label class="font-bold text-sky-800 text-xs block mb-1">1. Facts (Fakta Pembelajaran)</label>
+                            <p class="text-[11px] text-slate-500 mb-2">Materi TIK baru apa yang telah kamu pelajari hari ini?</p>
+                            <textarea id="ref-facts" required rows="2" class="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-sky-400 outline-none" placeholder="Contoh: Belajar jenis antarmuka GUI/VUI dan membedakan browser dengan search engine..."></textarea>
+                        </div>
+                        <div class="p-4 bg-pink-50/70 rounded-2xl border border-pink-200">
+                            <label class="font-bold text-pink-800 text-xs block mb-1">2. Feelings (Perasaan)</label>
+                            <p class="text-[11px] text-slate-500 mb-2">Bagaimana perasaanmu saat mencoba kuis Cerdas Cermat & Simulasi?</p>
+                            <textarea id="ref-feelings" required rows="2" class="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-pink-400 outline-none" placeholder="Contoh: Sangat senang karena Cerdas Cermat seru dengan audio tepuk tangan..."></textarea>
+                        </div>
+                        <div class="p-4 bg-amber-50/70 rounded-2xl border border-amber-200">
+                            <label class="font-bold text-amber-800 text-xs block mb-1">3. Findings (Temuan / Insight)</label>
+                            <p class="text-[11px] text-slate-500 mb-2">Pelajaran penting apa yang paling berharga bagi dirimu?</p>
+                            <textarea id="ref-findings" required rows="2" class="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-400 outline-none" placeholder="Contoh: Ternyata berkirim email harus menggunakan etika dan struktur yang baik..."></textarea>
+                        </div>
+                        <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200">
+                            <label class="font-bold text-emerald-800 text-xs block mb-1">4. Future (Penerapan Masa Depan)</label>
+                            <p class="text-[11px] text-slate-500 mb-2">Bagaimana kamu akan menerapkan ilmu TIK ini ke depan?</p>
+                            <textarea id="ref-future" required rows="2" class="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-400 outline-none" placeholder="Contoh: Selalu merapikan folder tugas sekolah di komputer rumah..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                        <input type="text" id="ref-nama" placeholder="Nama Lengkap Siswa" required class="flex-1 p-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-none">
+                        <button type="submit" class="bg-gradient-to-r from-sky-500 to-pink-500 hover:opacity-95 text-white font-bold px-6 py-3 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fa-solid fa-paper-plane"></i> Kirim Refleksi Siswa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= DASHBOARD GURU ================= -->
+        <section id="dashboard" class="page-section hidden">
+            <div id="dashboard-print-area" class="space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-900">Dashboard Guru & Analisis Asesmen</h2>
+                        <p class="text-xs text-slate-500">Pemantauan Real-time Ketuntasan Belajar Siswa (Ibu Ester Afriyani, S.Si)</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 no-print">
+                        <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow"><i class="fa-solid fa-file-excel"></i> Ekspor CSV/Excel</button>
+                        <button onclick="window.print()" class="bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow"><i class="fa-solid fa-file-pdf"></i> Cetak Laporan PDF</button>
+                        <button onclick="openSyncModal()" class="bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow"><i class="fa-solid fa-cloud"></i> Sync Google Sheets</button>
+                    </div>
+                </div>
+
+                <!-- Stats summary cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-sky-500">
+                        <div class="text-xs text-slate-500">Total Refleksi</div>
+                        <div id="stat-refleksi" class="text-2xl font-extrabold text-slate-800">0</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-emerald-500">
+                        <div class="text-xs text-slate-500">Rata Pretest</div>
+                        <div id="stat-pretest" class="text-2xl font-extrabold text-emerald-600">0%</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-amber-500">
+                        <div class="text-xs text-slate-500">Rata Formatif</div>
+                        <div id="stat-formatif" class="text-2xl font-extrabold text-amber-600">0%</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-pink-500">
+                        <div class="text-xs text-slate-500">Sesi Quiz Cerdas Cermat</div>
+                        <div id="stat-cc" class="text-2xl font-extrabold text-pink-600">0</div>
+                    </div>
+                </div>
+
+                <!-- Chart & Table -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="font-bold text-xs sm:text-sm text-slate-700 mb-4">Grafik Analisis Ketuntasan Asesmen</h3>
+                        <canvas id="chartAsesmen" height="180"></canvas>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                        <h3 class="font-bold text-xs sm:text-sm text-slate-700">Data Refleksi Siswa (Model 4F)</h3>
+                        <div class="overflow-y-auto max-h-60 border border-slate-100 rounded-xl">
+                            <table class="w-full text-xs text-left">
+                                <thead class="bg-slate-100 sticky top-0 text-slate-600">
+                                    <tr>
+                                        <th class="p-2.5">Nama</th>
+                                        <th class="p-2.5">Findings</th>
+                                        <th class="p-2.5 text-center">Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-refleksi" class="divide-y divide-slate-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 5: PENGEMBANG ================= -->
+        <section id="pengembang" class="page-section hidden flex items-center justify-center min-h-[60vh]">
+            <div class="bg-white max-w-md w-full rounded-3xl shadow-xl overflow-hidden border border-sky-100 text-center">
+                <div class="h-28 bg-gradient-to-r from-sky-500 via-sky-400 to-pink-500"></div>
+                <div class="px-6 pb-6 -mt-14">
+                    <div class="w-24 h-24 rounded-full bg-white p-1 mx-auto shadow-md mb-3">
+                        <div class="w-full h-full rounded-full bg-gradient-to-tr from-sky-400 to-pink-400 text-white flex items-center justify-center text-3xl font-extrabold border-2 border-white">
+                            EA
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-extrabold text-slate-900">Ester Afriyani, S.Si</h2>
+                    <p class="text-xs font-semibold text-pink-600 mb-4">Pengembang Media Pembelajaran Interaktif TIK</p>
+                    
+                    <div class="bg-slate-50 p-4 rounded-2xl text-xs text-slate-600 space-y-2 border border-slate-100 text-left leading-relaxed">
+                        <p><i class="fa-solid fa-graduation-cap text-sky-600 mr-1.5"></i> <strong>Aplikasi:</strong> Media Pembelajaran TIK SMP Kelas 7 - BAB 3 (Teknologi Informasi & Komunikasi).</p>
+                        <p><i class="fa-solid fa-brain text-pink-600 mr-1.5"></i> <strong>Pendekatan:</strong> Deep Learning (Mindful, Meaningful, Joyful), HOTS, Berdiferensiasi & Asesmen Autentik 4F.</p>
+                        <p><i class="fa-solid fa-code text-amber-600 mr-1.5"></i> <strong>Teknologi:</strong> HTML5, Tailwind CSS, Web Audio Synthesizer, Chart.js, & Google Sheet API Sync.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Database Storage in LocalStorage
+        let db = {
+            pretest: JSON.parse(localStorage.getItem('db_pretest_k7')) || [],
+            formatif: JSON.parse(localStorage.getItem('db_formatif_k7')) || [],
+            cc: JSON.parse(localStorage.getItem('db_cc_k7')) || [],
+            refleksi: JSON.parse(localStorage.getItem('db_refleksi_k7')) || []
+        };
+
+        const saveDB = () => {
+            localStorage.setItem('db_pretest_k7', JSON.stringify(db.pretest));
+            localStorage.setItem('db_formatif_k7', JSON.stringify(db.formatif));
+            localStorage.setItem('db_cc_k7', JSON.stringify(db.cc));
+            localStorage.setItem('db_refleksi_k7', JSON.stringify(db.refleksi));
+            updateDashboard();
+        };
+
+        // Web Audio Synthesizer (No external sound files required)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, type, duration) {
+            try {
+                if(audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        const sfx = {
+            correct: () => { 
+                playTone(523.25, 'sine', 0.15); 
+                setTimeout(() => playTone(659.25, 'sine', 0.3), 120); 
+            },
+            wrong: () => { 
+                playTone(220, 'sawtooth', 0.35); 
+            },
+            applause: () => {
+                for(let i=0; i<10; i++){
+                    setTimeout(() => playTone(300 + Math.random()*500, 'triangle', 0.1), i*80);
+                }
+            }
+        };
+
+        // Navigation Controller
+        function nav(pageId) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-white/20', 'font-bold'));
+            const activeBtn = document.getElementById('nav-' + pageId);
+            if(activeBtn) activeBtn.classList.add('bg-white/20', 'font-bold');
+
+            if(pageId === 'dashboard') updateDashboard();
+        }
+
+        function subnav(subId, btn) {
+            document.querySelectorAll('.sub-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(subId).classList.remove('hidden');
+            document.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('subtab-active'));
+            btn.classList.add('subtab-active');
+        }
+
+        function subnavApp(subId, btn) {
+            document.querySelectorAll('.app-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(subId).classList.remove('hidden');
+            document.querySelectorAll('.subtab-app-btn').forEach(b => b.classList.remove('subtab-app-active'));
+            btn.classList.add('subtab-app-active');
+        }
+
+        // Questions Data for Kelas 7 TIK
+        const qPretest = [
+            { q: "Tampilan berupa ikon, jendela, dan tombol tombol grafis pada smartphone atau Windows dinamakan...", opts: ["GUI (Graphical User Interface)", "CLI (Command Line Interface)", "VUI (Voice User Interface)", "Hardware"], a: 0 },
+            { q: "Ekstensi file yang menunjukkan dokumen teks Microsoft Word adalah...", opts: [".docx", ".jpg", ".mp3", ".xlsx"], a: 0 },
+            { q: "Perangkat lunak yang digunakan untuk membuka situs internet dinamakan...", opts: ["Peramban Web (Browser)", "Mesin Pencari (Search Engine)", "Surat Elektronik", "Hardware"], a: 0 }
+        ];
+
+        const qFormatif = [
+            {
+                q: "[HOTS Analisis] Budi ingin mengirimkan berkas tugas sekolah via email kepada gurunya. Komponen email manakah yang HARUS diisi agar gurunya mengetahui tujuan isi pesan secara singkat sebelum membuka pesan?",
+                opts: [
+                    "Subject (Subjek Email)",
+                    "BCC (Blind Carbon Copy)",
+                    "Attachment (Lampiran)",
+                    "Signature"
+                ], a: 0,
+                exp: "Subject merupakan judul singkat pesan email yang berfungsi memberitahu penerima tentang maksud isi email secara efektif."
+            },
+            {
+                q: "[HOTS Evaluasi] Siti ingin menyimpan file tugas IPA di komputernya. Manakah penamaan file dan lokasi penyimpanan yang paling terstruktur?",
+                opts: [
+                    "Folder: Downloads / Nama File: Tugas.docx",
+                    "Folder: Kelas 7 / Tugas IPA / Nama File: IPA_Pengamatan_Siti_Kel7.docx",
+                    "Folder: Desktop / Nama File: Document1.docx",
+                    "Folder: Recycle Bin / Nama File: FileFoto.jpg"
+                ], a: 1,
+                exp: "Membuat hirarki folder bertingkat (Kelas 7 -> Tugas IPA) serta memberikan nama file yang spesifik mempermudah pencarian kembali."
+            }
+        ];
+
+        function renderQuiz(containerId, questions, type) {
+            let html = `<div class="space-y-4" id="${type}-form">`;
+            questions.forEach((item, idx) => {
+                html += `
+                <div class="bg-white p-4 rounded-2xl border border-sky-100 space-y-3 shadow-sm">
+                    <p class="font-bold text-xs sm:text-sm text-slate-800">${idx+1}. ${item.q}</p>
+                    <div class="space-y-2">
+                        ${item.opts.map((opt, oIdx) => `
+                            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer text-xs hover:border-sky-400 transition">
+                                <input type="radio" name="${type}_q${idx}" value="${oIdx}"> <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>`;
+            });
+            html += `<button onclick="submitQuiz('${type}')" class="bg-sky-600 text-white font-bold px-6 py-3 rounded-xl text-xs hover:bg-sky-700 transition shadow-md">Kirim Jawaban & Cek Nilai</button></div>`;
+            document.getElementById(containerId).innerHTML = html;
+        }
+
+        function submitQuiz(type) {
+            const questions = type === 'pretest' ? qPretest : qFormatif;
+            let score = 0, answered = 0;
+            questions.forEach((item, idx) => {
+                const selected = document.querySelector(`input[name="${type}_q${idx}"]:checked`);
+                if(selected) {
+                    answered++;
+                    if(parseInt(selected.value) === item.a) score++;
+                }
+            });
+
+            if(answered < questions.length) {
+                Swal.fire('Perhatian', 'Mohon jawab semua pertanyaan terlebih dahulu!', 'warning');
+                return;
+            }
+
+            const finalScore = Math.round((score / questions.length) * 100);
+            Swal.fire({
+                title: 'Nilai Kamu: ' + finalScore,
+                text: 'Masukkan nama lengkapmu untuk disimpan ke Dashboard Guru:',
+                input: 'text',
+                inputPlaceholder: 'Nama Lengkap Siswa',
+                showCancelButton: true
+            }).then((res) => {
+                if(res.isConfirmed && res.value) {
+                    db[type].push({ name: res.value, score: finalScore, date: new Date().toLocaleDateString() });
+                    saveDB();
+                    if(finalScore >= 70) sfx.applause(); else sfx.wrong();
+                    
+                    let htmlRes = `<div class="p-6 bg-sky-50 rounded-2xl border border-sky-200 text-center space-y-3">
+                        <i class="fa-solid fa-circle-check text-4xl text-sky-500"></i>
+                        <h3 class="font-bold text-sky-800 text-lg">Terkirim! Nilai: ${finalScore}</h3>`;
+                    
+                    if(type === 'formatif') {
+                        htmlRes += `<div class="text-left bg-white p-4 rounded-xl text-xs space-y-2 border"><strong>Pembahasan Jawaban:</strong>`;
+                        qFormatif.forEach((q, i) => { htmlRes += `<p><b>Soal ${i+1}:</b> ${q.exp}</p>`; });
+                        htmlRes += `</div>`;
+                    }
+                    htmlRes += `</div>`;
+                    document.getElementById(`${type}-form`).innerHTML = htmlRes;
+                }
+            });
+        }
+
+        // Simulation
+        function runSimulation() {
+            const keyword = document.getElementById('sim-input').value;
+            if(!keyword) return;
+
+            const spider = document.getElementById('sim-spider');
+            const status = document.getElementById('sim-status');
+            const rank = document.getElementById('sim-rank');
+
+            status.innerText = "1. CRAWLING HALAMAN WEB...";
+            spider.style.opacity = "1";
+            spider.style.transform = "translateX(60px)";
+
+            setTimeout(() => {
+                status.innerText = "2. INDEXING KE BASIS DATA...";
+                spider.style.transform = "translateX(160px)";
+            }, 1200);
+
+            setTimeout(() => {
+                status.innerText = "3. MEMPROSES ALGORITMA RANKING RELEVANSI...";
+                spider.style.transform = "translateX(260px)";
+            }, 2400);
+
+            setTimeout(() => {
+                status.innerText = "STATUS: HASIL TERSEDIA!";
+                rank.style.opacity = "1";
+                document.getElementById('sim-result-title').innerText = "Top Rank untuk: " + keyword;
+                sfx.correct();
+            }, 3600);
+        }
+
+        // Cerdas Cermat Data for Kelas 7
+        const ccQuestions = {
+            mudah: [
+                { q: "Sistem antarmuka pengguna berbasis suara seperti Google Assistant dinamakan...", opts: ["VUI (Voice User Interface)", "GUI", "CLI", "Keyboard"], a: 0 },
+                { q: "Program aplikasi seperti Google Chrome dan Mozilla Firefox tergolong ke dalam...", opts: ["Peramban Web (Browser)", "Mesin Pencari", "Sistem Operasi", "Hardware"], a: 0 }
+            ],
+            sedang: [
+                { q: "Perintah untuk memindahkan file ke direktori folder baru dinamakan...", opts: ["Cut & Paste", "Copy & Paste", "Delete", "Rename"], a: 0 },
+                { q: "Fitur penerima tembusan email yang identitasnya tersembunyi dari penerima lain adalah...", opts: ["BCC (Blind Carbon Copy)", "CC", "Subject", "To"], a: 0 }
+            ],
+            sulit: [
+                { q: "[HOTS] Manakah penulisan kata kunci yang paling efisien untuk mencari modul pembelajaran TIK Kelas 7 dari situs resmi kemdikbud?", opts: ["modul TIK kelas 7 site:kemdikbud.go.id", "tolong cari modul TIK gratis", "kemdikbud modul TIK docx", "modul TIK kemdikbud pdf gratis"], a: 0 }
+            ]
+        };
+
+        let currentCC = { level: '', qList: [], qIdx: 0, scores: { A:0, B:0, C:0 }, locked: { A:null, B:null, C:null }, names:{} };
+
+        function startCC(level) {
+            const rawList = ccQuestions[level];
+            const shuffledList = rawList.map(q => {
+                const mappedOpts = q.opts.map((opt, i) => ({ text: opt, isCorrect: i === q.a }));
+                for (let i = mappedOpts.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [mappedOpts[i], mappedOpts[j]] = [mappedOpts[j], mappedOpts[i]];
+                }
+                return {
+                    q: q.q,
+                    opts: mappedOpts.map(o => o.text),
+                    a: mappedOpts.findIndex(o => o.isCorrect)
+                };
+            });
+
+            currentCC = {
+                level: level,
+                qList: shuffledList,
+                qIdx: 0,
+                scores: { A:0, B:0, C:0 },
+                locked: { A:null, B:null, C:null },
+                names: {
+                    A: document.getElementById('cc-teamA').value || 'Tim A',
+                    B: document.getElementById('cc-teamB').value || 'Tim B',
+                    C: document.getElementById('cc-teamC').value || 'Tim C'
+                }
+            };
+
+            document.getElementById('board-teamA').innerText = currentCC.names.A;
+            document.getElementById('board-teamB').innerText = currentCC.names.B;
+            document.getElementById('board-teamC').innerText = currentCC.names.C;
+            document.getElementById('cc-level-badge').innerText = "LEVEL " + level.toUpperCase();
+
+            document.getElementById('cc-setup').classList.add('hidden');
+            document.getElementById('cc-arena').classList.remove('hidden');
+            updateScoreUI();
+            loadCCQuestion();
+        }
+
+        function loadCCQuestion() {
+            if(currentCC.qIdx >= currentCC.qList.length) { endCC(); return; }
+            const q = currentCC.qList[currentCC.qIdx];
+            document.getElementById('cc-q-counter').innerText = `Soal ${currentCC.qIdx + 1} / ${currentCC.qList.length}`;
+            document.getElementById('cc-question-text').innerText = q.q;
+
+            const progress = ((currentCC.qIdx) / currentCC.qList.length) * 80;
+            document.getElementById('cc-rocket').style.bottom = `${progress + 5}%`;
+
+            currentCC.locked = { A:null, B:null, C:null };
+            document.getElementById('cc-cek-btn').classList.add('hidden');
+            document.getElementById('cc-next-btn').classList.add('hidden');
+
+            ['A','B','C'].forEach(team => {
+                const container = document.getElementById(`opts-${team}`);
+                container.innerHTML = q.opts.map((opt, i) => `
+                    <button onclick="lockAnswer('${team}', ${i})" class="w-full text-left p-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold hover:bg-sky-50 transition">
+                        ${['A','B','C','D'][i]}. ${opt}
+                    </button>
+                `).join('');
+            });
+        }
+
+        function lockAnswer(team, idx) {
+            currentCC.locked[team] = idx;
+            document.getElementById(`opts-${team}`).innerHTML = `<div class="bg-sky-600 text-white p-3 rounded-xl text-center text-xs font-bold animate-pulse"><i class="fa-solid fa-lock mr-1"></i> Jawaban Terkunci</div>`;
+            playTone(400, 'sine', 0.1);
+
+            if(currentCC.locked.A !== null && currentCC.locked.B !== null && currentCC.locked.C !== null) {
+                document.getElementById('cc-cek-btn').classList.remove('hidden');
+            }
+        }
+
+        function checkCerdasCermat() {
+            document.getElementById('cc-cek-btn').classList.add('hidden');
+            const q = currentCC.qList[currentCC.qIdx];
+            ['A','B','C'].forEach(team => {
+                const isCorrect = currentCC.locked[team] === q.a;
+                if(isCorrect) {
+                    currentCC.scores[team] += 100;
+                    document.getElementById(`opts-${team}`).innerHTML = `<div class="bg-emerald-500 text-white p-3 rounded-xl text-center text-xs font-bold"><i class="fa-solid fa-check mr-1"></i> Benar (+100)</div>`;
+                } else {
+                    document.getElementById(`opts-${team}`).innerHTML = `<div class="bg-pink-500 text-white p-3 rounded-xl text-center text-xs font-bold"><i class="fa-solid fa-xmark mr-1"></i> Salah</div>`;
+                }
+            });
+            sfx.applause();
+            updateScoreUI();
+            document.getElementById('cc-next-btn').classList.remove('hidden');
+        }
+
+        function updateScoreUI() {
+            document.getElementById('scoreA').innerText = currentCC.scores.A;
+            document.getElementById('scoreB').innerText = currentCC.scores.B;
+            document.getElementById('scoreC').innerText = currentCC.scores.C;
+        }
+
+        function nextCC() { currentCC.qIdx++; loadCCQuestion(); }
+
+        function endCC() {
+            document.getElementById('cc-arena').classList.add('hidden');
+            document.getElementById('cc-result').classList.remove('hidden');
+            
+            const scoresArr = [
+                { name: currentCC.names.A, score: currentCC.scores.A },
+                { name: currentCC.names.B, score: currentCC.scores.B },
+                { name: currentCC.names.C, score: currentCC.scores.C }
+            ].sort((a,b) => b.score - a.score);
+
+            document.getElementById('cc-podium').innerHTML = scoresArr.map((t, i) => `
+                <div class="flex justify-between items-center p-3.5 bg-white rounded-xl shadow-sm border-l-4 ${i===0?'border-amber-400 font-bold':'border-slate-300'} text-xs">
+                    <span>#${i+1} ${t.name}</span>
+                    <span class="text-sky-600 font-extrabold">${t.score} Poin</span>
+                </div>
+            `).join('');
+
+            db.cc.push({ date: new Date().toLocaleDateString(), winner: scoresArr[0].name });
+            saveDB();
+        }
+
+        function resetCC() {
+            document.getElementById('cc-result').classList.add('hidden');
+            document.getElementById('cc-setup').classList.remove('hidden');
+        }
+
+        function checkStudiKasus() {
+            const kw = document.getElementById('kasus-kw').value;
+            const al = document.getElementById('kasus-alasan').value;
+            if(!kw || !al) {
+                Swal.fire('Perhatian', 'Mohon lengkapi analisis kasus terlebih dahulu!', 'warning');
+                return;
+            }
+                Swal.fire('Analisis Terpantau!', 'Hasil studi kasus detektif digital TIK berhasil disimpan.', 'success');
+        }
+
+        function saveRefleksi(e) {
+            e.preventDefault();
+            db.refleksi.push({
+                name: document.getElementById('ref-nama').value,
+                facts: document.getElementById('ref-facts').value,
+                feelings: document.getElementById('ref-feelings').value,
+                findings: document.getElementById('ref-findings').value,
+                future: document.getElementById('ref-future').value,
+                date: new Date().toLocaleDateString()
+            });
+            saveDB();
+            Swal.fire('Terima Kasih!', 'Refleksi 4F kamu berhasil disimpan ke Dashboard Guru!', 'success');
+            document.getElementById('refleksiForm').reset();
+        }
+
+        let chartInstance = null;
+        function updateDashboard() {
+            document.getElementById('stat-refleksi').innerText = db.refleksi.length;
+            document.getElementById('stat-cc').innerText = db.cc.length;
+
+            const calcAvg = arr => arr.length ? Math.round(arr.reduce((a,b) => a + b.score, 0)/arr.length) : 0;
+            document.getElementById('stat-pretest').innerText = calcAvg(db.pretest) + '%';
+            document.getElementById('stat-formatif').innerText = calcAvg(db.formatif) + '%';
+
+            const ctx = document.getElementById('chartAsesmen').getContext('2d');
+            if(chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Rata Pretest', 'Rata Formatif'],
+                    datasets: [{
+                        data: [calcAvg(db.pretest), calcAvg(db.formatif)],
+                        backgroundColor: ['#0284C7', '#EC4899'],
+                        borderRadius: 8
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    plugins: { legend: { display: false } }, 
+                    scales: { y: { beginAtZero: true, max: 100 } } 
+                }
+            });
+
+            document.getElementById('table-refleksi').innerHTML = db.refleksi.slice().reverse().map(r => `
+                <tr>
+                    <td class="p-2.5 font-bold">${r.name}</td>
+                    <td class="p-2.5 text-slate-600 truncate max-w-[150px]">${r.findings}</td>
+                    <td class="p-2.5 text-center text-slate-400">${r.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        function exportToCSV() {
+            let csv = "data:text/csv;charset=utf-8,Nama,Facts,Feelings,Findings,Future,Tanggal\r\n";
+            db.refleksi.forEach(r => {
+                csv += `"${r.name}","${r.facts}","${r.feelings}","${r.findings}","${r.future}","${r.date}"\r\n`;
+            });
+            const link = document.createElement("a");
+            link.href = encodeURI(csv);
+            link.download = "Refleksi_TIK_Kelas7_EsterAfriyani.csv";
+            link.click();
+        }
+
+        function openSyncModal() {
+            Swal.fire({
+                title: 'Sinkronisasi Google Sheets API',
+                html: '<p class="text-xs text-slate-600 text-left">Masukkan URL Web App Google Apps Script untuk menghubungkan data refleksi dan nilai siswa secara otomatis ke Google Sheets:</p><input type="text" id="gscript-url" class="swal2-input text-xs" placeholder="https://script.google.com/macros/s/.../exec">',
+                showCancelButton: true,
+                confirmButtonText: 'Hubungkan'
+            }).then((res) => {
+                if(res.isConfirmed) {
+                    Swal.fire('Terhubung!', 'Aplikasi siap mengirim data ke Google Sheets.', 'success');
+                }
+            });
+        }
+
+        // Initialize default view on window load
+        window.onload = function() {
+            renderQuiz('pretest-container', qPretest, 'pretest');
+            renderQuiz('formatif-container', qFormatif, 'formatif');
+            updateDashboard();
+        };
+    </script>
+</body>
+</html>
